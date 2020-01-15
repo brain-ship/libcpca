@@ -8,7 +8,7 @@ public class LinuxPathBuilder extends AbstractPathBuilder {
 	
 	private String userName;
 	
-	private Stirng arch;
+	private String arch;
 	
 	public LinuxPathBuilder(String name) {
 		userName = name;
