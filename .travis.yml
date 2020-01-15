@@ -1,0 +1,24 @@
+language: java
+sudo: false # faster builds
+
+jdk:
+- oraclejdk8
+
+before_script:
+- export GIT_TAG=$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER
+- export FINALNAME=GeometryLib-$GIT_TAG
+
+script: mvn clean -DTRAVIS_JOB_ID=$TRAVIS_JOB_ID package cobertura:cobertura -DfinalName=$FINALNAME
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: releases
+  api_key: $GITPERM
+  skip_cleanup: true
+  file:
+    - "README.md"
+    - "target/$FINALNAME.jar"
+  on:
+    tags: true
